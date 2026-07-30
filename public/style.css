@@ -1,0 +1,96 @@
+:root {
+  --navy-dark: #0f172a;
+  --navy: #16213e;
+  --card: #1e293b;
+  --teal: #14b8a6;
+  --teal-light: #5eead4;
+  --white: #ffffff;
+  --offwhite: #f1f5f9;
+  --muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--navy-dark);
+  color: var(--offwhite);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+}
+
+.shell {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.shell-header h1 {
+  font-size: 2rem;
+  margin: 0 0 0.4rem 0;
+  color: var(--white);
+}
+
+.subtitle {
+  color: var(--teal-light);
+  margin: 0 0 2.5rem 0;
+  font-size: 0.95rem;
+}
+
+.status-card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.status-card h2 {
+  margin-top: 0;
+  font-size: 1.15rem;
+  color: var(--white);
+}
+
+.status-copy {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+button#test-connection-btn {
+  background: var(--teal);
+  color: var(--navy-dark);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+button#test-connection-btn:hover {
+  opacity: 0.9;
+}
+
+button#test-connection-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.result-box {
+  margin-top: 1.25rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--navy);
+  border: 1px solid var(--teal);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.result-box.error {
+  border-color: #f87171;
+  color: #fca5a5;
+}

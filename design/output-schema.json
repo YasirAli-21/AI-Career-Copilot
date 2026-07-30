@@ -1,0 +1,23 @@
+{
+  "_comment": "Canonical AnalysisReport shape, finalized Day 2. Mirrors docs/SCHEMA.md exactly. Reference only — not imported by running code. If this and SCHEMA.md ever disagree, SCHEMA.md is the source of truth.",
+  "overall_score": 78,
+  "summary_feedback": "string, 2-3 sentences, always encouraging",
+  "sections": {
+    "contact_info": { "score": 100, "status": "good", "issues": [] },
+    "summary": { "score": 60, "status": "needs_work", "issues": ["string"] },
+    "education": { "score": 90, "status": "good", "issues": [] },
+    "experience_projects": {
+      "score": 65,
+      "status": "needs_work",
+      "issues": ["string"],
+      "weak_bullets": [{ "original": "string", "rewritten": "string" }]
+    },
+    "skills": { "score": 55, "status": "needs_work", "missing_skills": ["string"] },
+    "ats_formatting": { "score": 85, "status": "good", "issues": ["string"] }
+  },
+  "jd_match": {
+    "available": true,
+    "match_percent": 72,
+    "top_gaps": ["string"]
+  }
+}

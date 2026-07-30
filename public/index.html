@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Career Copilot</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="shell-header">
+      <h1>AI Career Copilot</h1>
+      <p class="subtitle">Resume Intelligence Platform — Foundation Build (Day 3)</p>
+    </header>
+
+    <section class="status-card">
+      <h2>Backend Connection Check</h2>
+      <p class="status-copy">
+        This confirms the frontend, the Vercel serverless function, and the Claude API
+        are all wired together correctly. The real upload &amp; analysis UI is built
+        starting Day 4-6 — today just proves the pipeline works end to end.
+      </p>
+      <button id="test-connection-btn">Test Connection</button>
+      <div id="result-box" class="result-box" hidden></div>
+    </section>
+
+    <!--
+      FUTURE STRUCTURE (not built yet — placeholders for Day 4/6):
+      <section id="upload-screen">...</section>
+      <section id="loading-screen" hidden>...</section>
+      <section id="report-screen" hidden>...</section>
+      <section id="cover-letter-screen" hidden>...</section>
+      See docs/UI-WIREFRAMES.md for the full screen designs.
+    -->
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
