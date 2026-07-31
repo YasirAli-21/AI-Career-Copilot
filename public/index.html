@@ -10,28 +10,38 @@
   <main class="shell">
     <header class="shell-header">
       <h1>AI Career Copilot</h1>
-      <p class="subtitle">Resume Intelligence Platform — Foundation Build (Day 3)</p>
+      <p class="subtitle">Get a detailed, honest breakdown of your resume.</p>
     </header>
 
-    <section class="status-card">
-      <h2>Backend Connection Check</h2>
-      <p class="status-copy">
-        This confirms the frontend, the Vercel serverless function, and the Claude API
-        are all wired together correctly. The real upload &amp; analysis UI is built
-        starting Day 4-6 — today just proves the pipeline works end to end.
-      </p>
-      <button id="test-connection-btn">Test Connection</button>
+    <section class="card">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="upload-tab">Upload File</button>
+        <button class="tab-btn" data-tab="paste-tab">Paste Text</button>
+      </div>
+
+      <div id="upload-tab" class="tab-panel active">
+        <label for="file-input" class="dropzone" id="dropzone">
+          <span class="dropzone-icon">⬆</span>
+          <span id="dropzone-label">Drag &amp; drop your resume (PDF or DOCX)<br />or click to browse</span>
+        </label>
+        <input type="file" id="file-input" accept=".pdf,.docx" hidden />
+      </div>
+
+      <div id="paste-tab" class="tab-panel">
+        <textarea id="paste-textarea" placeholder="Paste your resume text here..." rows="10"></textarea>
+      </div>
+
+      <div id="extract-status" class="status-line" hidden></div>
+
+      <div class="field-group">
+        <label for="jd-textarea">Optional: paste a job description for a targeted match</label>
+        <textarea id="jd-textarea" placeholder="Paste the job description here (optional)..." rows="6"></textarea>
+      </div>
+
+      <button id="extract-btn">Extract Resume Text</button>
+
       <div id="result-box" class="result-box" hidden></div>
     </section>
-
-    <!--
-      FUTURE STRUCTURE (not built yet — placeholders for Day 4/6):
-      <section id="upload-screen">...</section>
-      <section id="loading-screen" hidden>...</section>
-      <section id="report-screen" hidden>...</section>
-      <section id="cover-letter-screen" hidden>...</section>
-      See docs/UI-WIREFRAMES.md for the full screen designs.
-    -->
   </main>
 
   <script src="app.js"></script>

@@ -7,6 +7,7 @@
   --white: #ffffff;
   --offwhite: #f1f5f9;
   --muted: #94a3b8;
+  --red: #f87171;
 }
 
 * {
@@ -39,29 +40,100 @@ body {
   font-size: 0.95rem;
 }
 
-.status-card {
+.card {
   background: var(--card);
   border-radius: 12px;
   padding: 2rem;
 }
 
-.status-card h2 {
-  margin-top: 0;
-  font-size: 1.15rem;
-  color: var(--white);
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
-.status-copy {
+.tab-btn {
+  flex: 1;
+  background: var(--navy);
+  color: var(--muted);
+  border: 1px solid transparent;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: rgba(20, 184, 166, 0.12);
+  color: var(--teal-light);
+  border-color: var(--teal);
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border: 2px dashed var(--muted);
+  border-radius: 10px;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
   color: var(--muted);
   font-size: 0.9rem;
-  line-height: 1.5;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-button#test-connection-btn {
+.dropzone:hover,
+.dropzone.dragover {
+  border-color: var(--teal);
+  background: rgba(20, 184, 166, 0.06);
+}
+
+.dropzone-icon {
+  font-size: 1.5rem;
+}
+
+textarea {
+  width: 100%;
+  background: var(--navy);
+  color: var(--offwhite);
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.field-group {
+  margin-top: 1.5rem;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+button#extract-btn {
+  margin-top: 1.5rem;
+  width: 100%;
   background: var(--teal);
   color: var(--navy-dark);
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.85rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.95rem;
@@ -69,13 +141,23 @@ button#test-connection-btn {
   transition: opacity 0.15s ease;
 }
 
-button#test-connection-btn:hover {
+button#extract-btn:hover {
   opacity: 0.9;
 }
 
-button#test-connection-btn:disabled {
+button#extract-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.status-line {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--teal-light);
+}
+
+.status-line.error {
+  color: var(--red);
 }
 
 .result-box {
@@ -85,12 +167,14 @@ button#test-connection-btn:disabled {
   background: var(--navy);
   border: 1px solid var(--teal);
   font-family: "SFMono-Regular", Consolas, monospace;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   white-space: pre-wrap;
   word-break: break-word;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .result-box.error {
-  border-color: #f87171;
+  border-color: var(--red);
   color: #fca5a5;
 }
