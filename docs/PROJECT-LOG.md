@@ -46,4 +46,17 @@ Running log of daily progress across the 10-day capstone.
 ---
 
 ## Day 4 — Implementation: Resume Input & Parsing
-*(To be filled in at end of Day 4)*
+**Date:** July 31, 2026
+
+- Installed `formidable` for multipart file upload handling.
+- Implemented real `api/extract.js`: PDF extraction (`pdf-parse` v2 class-based API), DOCX extraction (`mammoth`), text normalization, validation, and graceful error handling.
+- Rebuilt frontend with tabbed Upload/Paste interface, drag-and-drop, client-side validation, and JD textarea.
+- Debugged and fixed three dependency version mismatches (`formidable`, `pdf-parse` both had newer major-version APIs than expected).
+- Verified working: real PDF upload extraction (4,613 characters from Yasir's actual CV) and paste-text extraction.
+- **Known gaps flagged for later:** DOCX extraction untested (no sample file available), bad-file-type rejection untested (OS file picker filters non-PDF/DOCX by default). Both tracked for verification before Day 8.
+- **Deliverables:** DAY4-SUMMARY.md. No blueprint changes required — Day 4 was implemented exactly as scoped.
+
+---
+
+## Day 5 — Implementation: AI Analysis Engine
+*(To be filled in at end of Day 5 — remember pre-flight: resolve API credit + flip USE_MOCK to false before starting)*
