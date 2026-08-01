@@ -1,12 +1,14 @@
 // api/extract.js
 //
-// DAY 4: Real implementation. Extracts plain text from an uploaded PDF or DOCX
-// resume file using pdf-parse (v2, class-based API) and mammoth.
-// See docs/API.md for the full spec.
+// DAY 6 FIX: Pinned to pdf-parse v1.1.1 (function-based API, no canvas/rendering
+// dependencies) after v2's class-based API crashed in production on Vercel's Linux
+// servers due to a missing native @napi-rs/canvas dependency. v1 only does plain
+// text extraction — exactly what we need — and has no such dependency.
+// See docs/DAY6-SUMMARY.md for full root cause.
 
 const { IncomingForm } = require("formidable");
 const fs = require("fs");
-const { PDFParse } = require("pdf-parse");
+const pdfParse = require("pdf-parse");
 const mammoth = require("mammoth");
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB, per docs/API.md
@@ -67,14 +69,12 @@ module.exports = async (req, res) => {
     });
   }
 
-  let parser;
   try {
     const buffer = fs.readFileSync(file.filepath);
     let extractedText = "";
 
     if (isPdf) {
-      parser = new PDFParse({ data: buffer });
-      const result = await parser.getText();
+      const result = await pdfParse(buffer);
       extractedText = result.text;
     } else {
       const result = await mammoth.extractRawText({ buffer });
@@ -100,13 +100,6 @@ module.exports = async (req, res) => {
       error: "Something went wrong while processing your file. Please try again.",
     });
   } finally {
-    if (parser) {
-      try {
-        await parser.destroy();
-      } catch (_) {
-        /* ignore cleanup errors */
-      }
-    }
     if (file && file.filepath) {
       fs.unlink(file.filepath, () => {});
     }
