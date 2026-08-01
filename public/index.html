@@ -13,7 +13,8 @@
       <p class="subtitle">Get a detailed, honest breakdown of your resume.</p>
     </header>
 
-    <section class="card">
+    <!-- SCREEN 1: Upload / Input -->
+    <section id="input-screen" class="card">
       <div class="tabs">
         <button class="tab-btn active" data-tab="upload-tab">Upload File</button>
         <button class="tab-btn" data-tab="paste-tab">Paste Text</button>
@@ -31,19 +32,44 @@
         <textarea id="paste-textarea" placeholder="Paste your resume text here..." rows="10"></textarea>
       </div>
 
-      <div id="extract-status" class="status-line" hidden></div>
+      <div id="input-status" class="status-line" hidden></div>
 
       <div class="field-group">
         <label for="jd-textarea">Optional: paste a job description for a targeted match</label>
         <textarea id="jd-textarea" placeholder="Paste the job description here (optional)..." rows="6"></textarea>
       </div>
 
-      <button id="extract-btn">Extract Resume Text</button>
+      <button id="analyze-btn">Analyze My Resume</button>
+    </section>
 
-      <div id="result-box" class="result-box" hidden></div>
+    <!-- SCREEN 2: Loading -->
+    <section id="loading-screen" class="card loading-card" hidden>
+      <div class="spinner"></div>
+      <p id="loading-message">Reading through your resume section by section...</p>
+    </section>
+
+    <!-- SCREEN 3: Report -->
+    <section id="report-screen" hidden>
+      <div class="report-toolbar">
+        <button id="start-over-btn" class="link-btn">← Start Over</button>
+        <button id="download-btn" class="link-btn">Download Report</button>
+      </div>
+      <div id="score-header-mount"></div>
+      <div id="report-cards-mount" class="report-cards"></div>
+    </section>
+
+    <!-- SCREEN: Error -->
+    <section id="error-screen" class="card" hidden>
+      <p class="error-icon">⚠</p>
+      <p id="error-message" class="error-message"></p>
+      <button id="error-retry-btn">Try Again</button>
     </section>
   </main>
 
-  <script src="app.js"></script>
+  <footer class="site-footer">
+    Built with Claude as part of the AB Talks 60-Day Claude AI Challenge.
+  </footer>
+
+  <script type="module" src="app.js"></script>
 </body>
 </html>
