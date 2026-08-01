@@ -1,7 +1,8 @@
 // public/app.js
 //
-// DAY 6: Full flow wiring. Upload/Paste -> /api/analyze -> Report screen.
-// Uses ES modules to import the report card renderers.
+// DAY 7: Added cover letter generation, reusing resumeText/jdText already
+// captured from the analyze flow. Full screen flow: Input -> Loading -> Report
+// -> (optional) Loading -> Cover Letter, plus Error handling throughout.
 
 import { renderScoreHeader } from "./components/scoreHeader.js";
 import { renderSectionCard, renderJDMatchCard } from "./components/reportCard.js";
@@ -12,6 +13,7 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const inputScreen = document.getElementById("input-screen");
 const loadingScreen = document.getElementById("loading-screen");
 const reportScreen = document.getElementById("report-screen");
+const coverLetterScreen = document.getElementById("cover-letter-screen");
 const errorScreen = document.getElementById("error-screen");
 
 // --- Input screen elements ---
@@ -30,6 +32,14 @@ const scoreHeaderMount = document.getElementById("score-header-mount");
 const reportCardsMount = document.getElementById("report-cards-mount");
 const startOverBtn = document.getElementById("start-over-btn");
 const downloadBtn = document.getElementById("download-btn");
+const coverLetterBtn = document.getElementById("cover-letter-btn");
+
+// --- Cover letter screen elements ---
+const backToReportBtn = document.getElementById("back-to-report-btn");
+const copyLetterBtn = document.getElementById("copy-letter-btn");
+const downloadLetterBtn = document.getElementById("download-letter-btn");
+const coverLetterTextEl = document.getElementById("cover-letter-text");
+const jdUsedBadge = document.getElementById("jd-used-badge");
 
 // --- Error screen elements ---
 const errorMessageEl = document.getElementById("error-message");
@@ -38,6 +48,10 @@ const errorRetryBtn = document.getElementById("error-retry-btn");
 let activeTab = "upload-tab";
 let selectedFile = null;
 let lastReport = null;
+let lastResumeText = null;
+let lastJdText = null;
+let lastCoverLetter = null;
+let errorReturnScreen = "input"; // which screen "Try Again" should return to
 
 const SECTION_ORDER = [
   "contact_info",
@@ -53,7 +67,13 @@ function showScreen(name) {
   inputScreen.hidden = name !== "input";
   loadingScreen.hidden = name !== "loading";
   reportScreen.hidden = name !== "report";
+  coverLetterScreen.hidden = name !== "cover-letter";
   errorScreen.hidden = name !== "error";
+}
+
+function showLoading(message) {
+  document.getElementById("loading-message").textContent = message;
+  showScreen("loading");
 }
 
 // ---------- Tabs ----------
@@ -133,8 +153,8 @@ analyzeBtn.addEventListener("click", async () => {
       showStatus("Please choose a PDF or DOCX file first.", true);
       return;
     }
-    showScreen("loading");
-    document.getElementById("loading-message").textContent = "Extracting text from your resume...";
+    errorReturnScreen = "input";
+    showLoading("Extracting text from your resume...");
     try {
       const formData = new FormData();
       formData.append("file", selectedFile);
@@ -143,16 +163,15 @@ analyzeBtn.addEventListener("click", async () => {
       if (!extractRes.ok) throw new Error(extractData.error || "Extraction failed.");
       resumeText = extractData.text;
     } catch (err) {
-      showError(err.message);
+      showError(err.message, "input");
       return;
     }
   }
 
   const jdText = jdTextarea.value.trim();
 
-  showScreen("loading");
-  document.getElementById("loading-message").textContent =
-    "Reading through your resume section by section...";
+  errorReturnScreen = "input";
+  showLoading("Reading through your resume section by section...");
 
   try {
     const response = await fetch("/api/analyze", {
@@ -164,25 +183,32 @@ analyzeBtn.addEventListener("click", async () => {
     if (!response.ok) throw new Error(data.error || "Analysis failed.");
 
     lastReport = data;
+    lastResumeText = resumeText;
+    lastJdText = jdText || null;
+    lastCoverLetter = null; // reset any previous cover letter from an earlier session
     renderReport(data);
     showScreen("report");
   } catch (err) {
-    showError(err.message);
+    showError(err.message, "input");
   }
 });
 
-function showError(message) {
+function showError(message, returnTo) {
   errorMessageEl.textContent = message;
+  errorReturnScreen = returnTo || "input";
   showScreen("error");
 }
 
 errorRetryBtn.addEventListener("click", () => {
-  showScreen("input");
+  showScreen(errorReturnScreen);
 });
 
 startOverBtn.addEventListener("click", () => {
   selectedFile = null;
   lastReport = null;
+  lastResumeText = null;
+  lastJdText = null;
+  lastCoverLetter = null;
   fileInput.value = "";
   pasteTextarea.value = "";
   jdTextarea.value = "";
@@ -214,13 +240,7 @@ function renderReport(report) {
 downloadBtn.addEventListener("click", () => {
   if (!lastReport) return;
   const text = buildPlainTextReport(lastReport);
-  const blob = new Blob([text], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "resume-analysis-report.txt";
-  a.click();
-  URL.revokeObjectURL(url);
+  downloadTextFile(text, "resume-analysis-report.txt");
 });
 
 function buildPlainTextReport(report) {
@@ -260,6 +280,75 @@ function buildPlainTextReport(report) {
 
   return lines.join("\n");
 }
+
+function downloadTextFile(text, filename) {
+  const blob = new Blob([text], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ---------- Cover letter flow ----------
+coverLetterBtn.addEventListener("click", async () => {
+  if (!lastResumeText) return;
+
+  // If we already generated one this session, just show it again (no re-call).
+  if (lastCoverLetter) {
+    renderCoverLetter(lastCoverLetter);
+    showScreen("cover-letter");
+    return;
+  }
+
+  errorReturnScreen = "report";
+  showLoading("Writing your cover letter...");
+
+  try {
+    const response = await fetch("/api/cover-letter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ resumeText: lastResumeText, jdText: lastJdText || undefined }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Cover letter generation failed.");
+
+    lastCoverLetter = data;
+    renderCoverLetter(data);
+    showScreen("cover-letter");
+  } catch (err) {
+    showError(err.message, "report");
+  }
+});
+
+function renderCoverLetter(data) {
+  coverLetterTextEl.textContent = data.cover_letter;
+  jdUsedBadge.hidden = !data.jd_used;
+}
+
+backToReportBtn.addEventListener("click", () => {
+  showScreen("report");
+});
+
+copyLetterBtn.addEventListener("click", async () => {
+  if (!lastCoverLetter) return;
+  try {
+    await navigator.clipboard.writeText(lastCoverLetter.cover_letter);
+    const original = copyLetterBtn.textContent;
+    copyLetterBtn.textContent = "Copied!";
+    setTimeout(() => {
+      copyLetterBtn.textContent = original;
+    }, 1500);
+  } catch (err) {
+    console.error("Copy failed:", err);
+  }
+});
+
+downloadLetterBtn.addEventListener("click", () => {
+  if (!lastCoverLetter) return;
+  downloadTextFile(lastCoverLetter.cover_letter, "cover-letter.txt");
+});
 
 // Init
 showScreen("input");
