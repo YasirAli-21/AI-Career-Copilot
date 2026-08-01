@@ -71,5 +71,20 @@ Running log of daily progress across the 10-day capstone.
 
 ---
 
-## Day 6 — Implementation: Report UI & JD-Match Display
-*(To be filled in at end of Day 6)*
+## Day 6 — Full MVP + Early Deployment
+**Date:** August 1, 2026
+
+- **Schedule note:** at the person's request, deployment (originally Day 9) happened today alongside the report UI, producing a shareable live demo ahead of schedule. Day 9 is now a hardening pass, not the first deployment.
+- Built the complete report UI: score header, six section cards (status badges, issues, missing skills, weak-bullet before/after), conditional JD-match card.
+- Wired the full flow end-to-end: upload/paste → extract (if file) → analyze → report. Added Start Over and Download Report (plain-text export).
+- Added the required footer: "Built with Claude as part of the AB Talks 60-Day Claude AI Challenge."
+- Debugged three separate copy-paste content-swap issues during implementation (files receiving each other's content) — resolved by verifying file contents directly via `findstr` after every paste, rather than trusting the editor UI.
+- **Deployed to production on Vercel** (`vercel --prod`), added `GEMINI_API_KEY` to Vercel's environment variables.
+- **Found and fixed a real production-only bug:** `pdf-parse` v2 crashed on Vercel's Linux servers (missing native `@napi-rs/canvas` dependency, browser-only APIs). Fixed by pinning to `pdf-parse@1.1.1`, the simpler function-based version with no rendering dependencies. Verified locally, then redeployed and reverified live.
+- **Confirmed full MVP working on the live production URL**, including footer visibility: https://ai-career-copilot-lime-xi.vercel.app
+- **Deliverables:** DAY6-SUMMARY.md, updated Implementation Blueprint (MVP status + Day 9 scope change), updated ENVIRONMENT.md.
+
+---
+
+## Day 7 — Implementation: Cover Letter Generator (Bonus)
+*(To be filled in at end of Day 7)*

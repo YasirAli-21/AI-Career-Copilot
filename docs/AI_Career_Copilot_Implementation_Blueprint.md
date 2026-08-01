@@ -3,7 +3,9 @@
 **Project:** AI Career Copilot — Resume Intelligence Platform (v1.0)
 **Owner:** Yasir | ABTalks 60-Day Claude AI Mastery Challenge — Capstone
 **Time budget:** ~1–2 focused hours/day
-**Status:** Day 1 (Requirements), Day 2 (Design), Day 3 (Setup), Day 4 (Resume Input), and Day 5 (AI Analysis Engine) complete. This document is the single source of truth for Days 6–10.
+**Status:** Days 1-6 complete (Requirements, Design, Setup, Resume Input, AI Analysis Engine, Report UI). **Full MVP is live and deployed**, ahead of the original schedule. This document is the single source of truth for Days 7–10.
+
+> **Day 6 update — MVP complete and deployed early:** At the person's request, deployment (originally Day 9) happened today alongside the report UI. The full flow (upload/paste → analyze → report) is live at the production URL, verified working end-to-end including a real production-only bug fix (see `docs/DAY6-SUMMARY.md`). **Day 9 is now a hardening/verification pass on the existing live app, not the first deployment.** Day 7 (Cover Letter) and Day 8 (Testing) proceed as originally scheduled.
 
 > **Day 5 update — AI provider switched to Gemini:** Anthropic's Claude API has no free tier, and paid tools were ruled out. The project now uses **Google's Gemini API** (`gemini-flash-lite-latest`, free tier, no credit card) instead of Claude for all AI calls. `GEMINI_API_KEY` replaces `ANTHROPIC_API_KEY` in `.env`. The architecture, JSON schema, and API contracts are all unchanged — only the SDK call in `api/analyze.js` (and, on Day 7, `api/cover-letter.js`) differs. Full rationale in `docs/DAY5-SUMMARY.md`. **The MOCK MODE blocker from Day 3 is now resolved** — real AI calls are live and verified working.
 
@@ -448,7 +450,7 @@ Bring: confirmation the app is stable across the tested scenarios, and a short l
 ## Day 9 — Deployment
 
 ### 🎯 Objective
-Deploy the tested v1.0 to a live, public URL and confirm it works reliably in production, not just locally.
+~~Deploy the tested v1.0 to a live, public URL~~ **Superseded by Day 6:** the app was already deployed and verified live on Day 6, ahead of schedule, at the person's request. Today's objective instead becomes: re-verify the live production app against everything built in Days 7-8 (cover letter, testing fixes), confirm no regressions, and harden anything found. If Days 7-8 added real code changes, redeploy (`vercel --prod`) and re-run the production verification checklist from `docs/DAY6-SUMMARY.md`.
 
 ### 📖 What I'll learn
 End-to-end deployment of a full-stack AI web app, including securely managing secrets in a production environment.

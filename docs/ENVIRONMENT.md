@@ -24,7 +24,7 @@ No other environment variables are needed for v1.0 (no database URL, no auth sec
 | Package | Purpose | Used starting |
 |---|---|---|
 | `@google/generative-ai` | Official Gemini API client | Day 5 |
-| `pdf-parse` | PDF → plain text extraction (v2, class-based API) | Day 4 |
+| `pdf-parse` | PDF → plain text extraction. **Pinned to v1.1.1** (Day 6) after v2 crashed in production — see `docs/DAY6-SUMMARY.md` | Day 4, fixed Day 6 |
 | `mammoth` | DOCX → plain text extraction | Day 4 |
 | `formidable` | Multipart file upload parsing | Day 4 |
 | `@anthropic-ai/sdk` | No longer used as of Day 5 — safe to remove in a future cleanup pass | Day 3 only |
