@@ -23,6 +23,7 @@
   "homepage": "https://github.com/YasirAli-21/AI-Career-Copilot#readme",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",
+    "@google/generative-ai": "^0.24.1",
     "formidable": "^3.5.4",
     "mammoth": "^1.12.0",
     "pdf-parse": "^2.4.5"

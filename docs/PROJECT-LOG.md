@@ -59,4 +59,17 @@ Running log of daily progress across the 10-day capstone.
 ---
 
 ## Day 5 — Implementation: AI Analysis Engine
-*(To be filled in at end of Day 5 — remember pre-flight: resolve API credit + flip USE_MOCK to false before starting)*
+**Date:** August 1, 2026
+
+- **Major decision:** switched AI provider from Anthropic Claude to Google Gemini (`gemini-flash-lite-latest`), since Claude's API has no free tier and paid tools were ruled out. Architecture, schema, and API contracts unchanged — only the SDK call itself differs. Full rationale in `docs/DAY5-SUMMARY.md`.
+- Built production `prompts/analysisPrompt.js`: strict JSON output instructions matching `docs/SCHEMA.md`, guardrails against invented resume content, conditional JD-matching logic.
+- Built real `api/analyze.js`: Gemini API call with JSON response mode, retry-on-malformed-JSON logic, full server-side validation/backfill of the schema.
+- Verified with real test calls (Node.js test scripts, since PowerShell's `curl` alias mangled the request — documented for future reference): both no-JD and with-JD paths returned complete, accurate, well-grounded reports.
+- Updated `docs/ENVIRONMENT.md` and `docs/ARCHITECTURE.md` to reflect the Gemini switch. Updated Implementation Blueprint banner.
+- **Known gap flagged:** malformed-JSON retry path exists in code but wasn't organically triggered during testing (both calls succeeded on first try) — tracked for Day 8.
+- **Deliverables:** DAY5-SUMMARY.md, updated ENVIRONMENT.md/ARCHITECTURE.md, updated Implementation Blueprint.
+
+---
+
+## Day 6 — Implementation: Report UI & JD-Match Display
+*(To be filled in at end of Day 6)*

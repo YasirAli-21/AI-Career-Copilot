@@ -3,9 +3,11 @@
 **Project:** AI Career Copilot — Resume Intelligence Platform (v1.0)
 **Owner:** Yasir | ABTalks 60-Day Claude AI Mastery Challenge — Capstone
 **Time budget:** ~1–2 focused hours/day
-**Status:** Day 1 (Requirements), Day 2 (Design), and Day 3 (Setup) complete. This document is the single source of truth for Days 4–10.
+**Status:** Day 1 (Requirements), Day 2 (Design), Day 3 (Setup), Day 4 (Resume Input), and Day 5 (AI Analysis Engine) complete. This document is the single source of truth for Days 6–10.
 
-> **Day 3 update — Foundation built, one blocker flagged:** Full project scaffold is running locally via `vercel dev`. The frontend↔backend pipeline is confirmed working, but `api/analyze.js` is currently in **MOCK MODE** (`USE_MOCK = true`) because the Anthropic account has no API credit yet. Day 4 (parsing) is unaffected and can proceed normally. **Before Day 5 begins:** add Anthropic API credit and flip `USE_MOCK` to `false` in `api/analyze.js` — see `docs/DAY3-SUMMARY.md` for full details.
+> **Day 5 update — AI provider switched to Gemini:** Anthropic's Claude API has no free tier, and paid tools were ruled out. The project now uses **Google's Gemini API** (`gemini-flash-lite-latest`, free tier, no credit card) instead of Claude for all AI calls. `GEMINI_API_KEY` replaces `ANTHROPIC_API_KEY` in `.env`. The architecture, JSON schema, and API contracts are all unchanged — only the SDK call in `api/analyze.js` (and, on Day 7, `api/cover-letter.js`) differs. Full rationale in `docs/DAY5-SUMMARY.md`. **The MOCK MODE blocker from Day 3 is now resolved** — real AI calls are live and verified working.
+
+> **Day 3 update — Foundation built:** Full project scaffold running locally via `vercel dev`.
 
 > **How to use this document:** Each day begins as a fresh AI conversation. Paste that day's full section into the new chat as context, along with any files/screenshots requested in "Handoff notes." The AI should be able to start building immediately — no re-planning, no re-litigating scope. Scope is locked per the PRD: core = AI Resume Analyzer, bonus = Cover Letter Generator, both stateless, no accounts.
 
@@ -231,7 +233,6 @@ Practical prompt engineering for structured JSON output, and how to make LLM out
 - JSON parsing/validation of the AI response with a retry-on-malformed-output safeguard
 
 ### 📝 Step-by-step implementation plan
-0. **Pre-flight check (do this first):** confirm the Anthropic account has API credit, and change `USE_MOCK = false` in `api/analyze.js`. Click Test Connection once to confirm a real (non-mock) Claude response comes back before writing any real analysis logic.
 1. Finalize the Day 2 draft prompt into production form. Explicitly instruct Claude to: use only content present in the resume, never invent metrics/achievements, be specific (cite the actual weak line, not generic advice), stay encouraging in tone, and output **strictly valid JSON only** matching the agreed schema, with no prose before/after.
 2. Implement conditional prompt logic: if a JD is present, include it and instruct Claude to populate `jd_match`; if absent, instruct Claude to omit/null that section and focus purely on general ATS-friendliness.
 3. Call the Claude API from `/api/analyze` with the finalized prompt, passing in the resume text (+ JD if present).

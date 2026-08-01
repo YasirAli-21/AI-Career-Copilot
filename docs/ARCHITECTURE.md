@@ -102,7 +102,7 @@ sequenceDiagram
 
 | Service | Purpose | Notes |
 |---|---|---|
-| **Anthropic Claude API** | Core AI analysis + cover letter generation | Only external dependency in the entire system; API key stored as a Vercel environment variable |
+| **Google Gemini API** (`gemini-flash-lite-latest`) | Core AI analysis + cover letter generation | Only external dependency in the entire system; free tier, no credit card required. API key stored as a Vercel environment variable. **Switched from Anthropic Claude API on Day 5** — see `docs/DAY5-SUMMARY.md` for rationale (Claude API has no free tier). |
 | **Vercel** | Hosting (static frontend + serverless functions) + CI/CD (auto-deploy from GitHub) | Free tier; no other infrastructure needed |
 | **GitHub** | Source control, triggers Vercel deployments | Already set up (Day 2) |
 
