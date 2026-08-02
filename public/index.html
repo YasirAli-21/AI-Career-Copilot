@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a href="#input-screen" class="skip-link">Skip to main content</a>
+
   <main class="shell">
     <header class="shell-header">
       <h1>AI Career Copilot</h1>
@@ -15,24 +17,32 @@
 
     <!-- SCREEN 1: Upload / Input -->
     <section id="input-screen" class="card">
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="upload-tab">Upload File</button>
-        <button class="tab-btn" data-tab="paste-tab">Paste Text</button>
+      <div class="tabs" role="tablist" aria-label="Resume input method">
+        <button class="tab-btn active" data-tab="upload-tab" role="tab" aria-selected="true">Upload File</button>
+        <button class="tab-btn" data-tab="paste-tab" role="tab" aria-selected="false">Paste Text</button>
       </div>
 
-      <div id="upload-tab" class="tab-panel active">
-        <label for="file-input" class="dropzone" id="dropzone">
-          <span class="dropzone-icon">⬆</span>
+      <div id="upload-tab" class="tab-panel active" role="tabpanel">
+        <label
+          for="file-input"
+          class="dropzone"
+          id="dropzone"
+          tabindex="0"
+          role="button"
+          aria-label="Upload resume file, PDF or DOCX, click or press Enter to browse, or drag and drop"
+        >
+          <span class="dropzone-icon" aria-hidden="true">⬆</span>
           <span id="dropzone-label">Drag &amp; drop your resume (PDF or DOCX)<br />or click to browse</span>
         </label>
         <input type="file" id="file-input" accept=".pdf,.docx" hidden />
       </div>
 
-      <div id="paste-tab" class="tab-panel">
+      <div id="paste-tab" class="tab-panel" role="tabpanel">
+        <label for="paste-textarea" class="sr-only">Paste your resume text</label>
         <textarea id="paste-textarea" placeholder="Paste your resume text here..." rows="10"></textarea>
       </div>
 
-      <div id="input-status" class="status-line" hidden></div>
+      <div id="input-status" class="status-line" role="status" aria-live="polite" hidden></div>
 
       <div class="field-group">
         <label for="jd-textarea">Optional: paste a job description for a targeted match</label>
@@ -43,13 +53,13 @@
     </section>
 
     <!-- SCREEN 2: Loading -->
-    <section id="loading-screen" class="card loading-card" hidden>
-      <div class="spinner"></div>
+    <section id="loading-screen" class="card loading-card" hidden role="status" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
       <p id="loading-message">Reading through your resume section by section...</p>
     </section>
 
     <!-- SCREEN 3: Report -->
-    <section id="report-screen" hidden>
+    <section id="report-screen" hidden aria-live="polite">
       <div class="report-toolbar">
         <button id="start-over-btn" class="link-btn">← Start Over</button>
         <button id="download-btn" class="link-btn">Download Report</button>
@@ -60,7 +70,7 @@
     </section>
 
     <!-- SCREEN 4: Cover Letter -->
-    <section id="cover-letter-screen" hidden>
+    <section id="cover-letter-screen" hidden aria-live="polite">
       <div class="report-toolbar">
         <button id="back-to-report-btn" class="link-btn">← Back to Report</button>
         <div class="toolbar-actions">
@@ -75,8 +85,8 @@
     </section>
 
     <!-- SCREEN: Error -->
-    <section id="error-screen" class="card" hidden>
-      <p class="error-icon">⚠</p>
+    <section id="error-screen" class="card" hidden role="alert" aria-live="assertive">
+      <p class="error-icon" aria-hidden="true">⚠</p>
       <p id="error-message" class="error-message"></p>
       <button id="error-retry-btn">Try Again</button>
     </section>

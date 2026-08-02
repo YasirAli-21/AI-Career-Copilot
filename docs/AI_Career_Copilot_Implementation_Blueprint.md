@@ -3,7 +3,9 @@
 **Project:** AI Career Copilot — Resume Intelligence Platform (v1.0)
 **Owner:** Yasir | ABTalks 60-Day Claude AI Mastery Challenge — Capstone
 **Time budget:** ~1–2 focused hours/day
-**Status:** Days 1-6 complete (Requirements, Design, Setup, Resume Input, AI Analysis Engine, Report UI). **Full MVP is live and deployed**, ahead of the original schedule. This document is the single source of truth for Days 7–10.
+**Status:** Days 1-7 complete (Requirements, Design, Setup, Resume Input, AI Analysis Engine, Report UI, Cover Letter + UX Polish). **Full v1.0 feature set is live and deployed.** This document is the single source of truth for Days 8–10.
+
+> **Day 7 update — Cover letter shipped, UX/accessibility polish pass done:** The bonus cover letter feature is live and verified in production. A senior-level UX review pass fixed a real keyboard-accessibility bug (upload dropzone was mouse-only), added aria-live regions, a proportional score ring, mobile responsive breakpoints, and respect for `prefers-reduced-motion`. Full details in `docs/DAY7-SUMMARY.md`. **Every planned v1.0 feature is now built and live** — Day 8 is a genuine stress-test of a complete product, not a partial one.
 
 > **Day 6 update — MVP complete and deployed early:** At the person's request, deployment (originally Day 9) happened today alongside the report UI. The full flow (upload/paste → analyze → report) is live at the production URL, verified working end-to-end including a real production-only bug fix (see `docs/DAY6-SUMMARY.md`). **Day 9 is now a hardening/verification pass on the existing live app, not the first deployment.** Day 7 (Cover Letter) and Day 8 (Testing) proceed as originally scheduled.
 

@@ -25,10 +25,51 @@ body {
   flex-direction: column;
 }
 
+/* Accessibility utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--teal);
+  color: var(--navy-dark);
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  z-index: 100;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Visible, on-brand focus states everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.dropzone:focus-visible {
+  outline: 2px solid var(--teal-light);
+  outline-offset: 2px;
+}
+
 .shell {
   max-width: 720px;
   margin: 0 auto;
-  padding: 4rem 1.5rem 2rem;
+  padding: 3rem 1.5rem 2rem;
   flex: 1;
   width: 100%;
 }
@@ -37,6 +78,7 @@ body {
   font-size: 2rem;
   margin: 0 0 0.4rem 0;
   color: var(--white);
+  letter-spacing: -0.02em;
 }
 
 .subtitle {
@@ -49,6 +91,32 @@ body {
   background: var(--card);
   border-radius: 12px;
   padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Screen enter animation */
+.screen-enter {
+  animation: screenFadeIn 0.25s ease both;
+}
+
+@keyframes screenFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-enter {
+    animation: none;
+  }
+  .spinner {
+    animation-duration: 1.5s;
+  }
 }
 
 /* Tabs */
@@ -68,6 +136,7 @@ body {
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
 .tab-btn.active {
@@ -97,13 +166,17 @@ body {
   cursor: pointer;
   color: var(--muted);
   font-size: 0.9rem;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
 }
 
 .dropzone:hover,
 .dropzone.dragover {
   border-color: var(--teal);
   background: rgba(20, 184, 166, 0.06);
+}
+
+.dropzone:active {
+  transform: scale(0.995);
 }
 
 .dropzone-icon {
@@ -120,6 +193,11 @@ textarea {
   font-family: inherit;
   font-size: 0.9rem;
   resize: vertical;
+  transition: border-color 0.15s ease;
+}
+
+textarea:focus-visible {
+  border-color: var(--teal);
 }
 
 .field-group {
@@ -145,12 +223,17 @@ button#error-retry-btn {
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.15s ease, transform 0.1s ease;
 }
 
 button#analyze-btn:hover,
 button#error-retry-btn:hover {
   opacity: 0.9;
+}
+
+button#analyze-btn:active,
+button#error-retry-btn:active {
+  transform: scale(0.985);
 }
 
 button#analyze-btn:disabled {
@@ -199,6 +282,8 @@ button#analyze-btn:disabled {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .toolbar-actions {
@@ -213,10 +298,15 @@ button#analyze-btn:disabled {
   font-size: 0.85rem;
   cursor: pointer;
   padding: 0.4rem 0;
+  transition: opacity 0.15s ease;
 }
 
 .link-btn:hover {
   text-decoration: underline;
+}
+
+.link-btn:active {
+  opacity: 0.7;
 }
 
 /* Score header */
@@ -228,6 +318,7 @@ button#analyze-btn:disabled {
   align-items: center;
   gap: 1.5rem;
   margin-bottom: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .score-block {
@@ -238,16 +329,26 @@ button#analyze-btn:disabled {
 }
 
 .score-ring {
-  width: 76px;
-  height: 76px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  border: 3px solid var(--teal);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  padding: 4px;
+}
+
+.score-ring-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
   font-weight: 700;
-  color: var(--teal-light);
+  color: var(--white);
 }
 
 .score-label {
@@ -274,6 +375,12 @@ button#analyze-btn:disabled {
   background: var(--card);
   border-radius: 12px;
   padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.15s ease;
+}
+
+.report-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .report-card-header {
@@ -281,6 +388,7 @@ button#analyze-btn:disabled {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.85rem;
+  gap: 0.75rem;
 }
 
 .report-card-title {
@@ -294,6 +402,7 @@ button#analyze-btn:disabled {
   font-weight: 600;
   padding: 0.25rem 0.6rem;
   border-radius: 999px;
+  white-space: nowrap;
 }
 
 .status-good {
@@ -389,11 +498,15 @@ button#analyze-btn:disabled {
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, transform 0.1s ease;
 }
 
 .secondary-btn:hover {
   background: rgba(20, 184, 166, 0.08);
+}
+
+.secondary-btn:active {
+  transform: scale(0.985);
 }
 
 .secondary-btn:disabled {
@@ -446,4 +559,44 @@ button#analyze-btn:disabled {
   color: var(--muted);
   font-size: 0.8rem;
   border-top: 1px solid var(--card);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .shell {
+    padding: 2rem 1rem 1.5rem;
+  }
+
+  .shell-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .card,
+  .report-card,
+  .score-header {
+    padding: 1.25rem;
+  }
+
+  .score-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .report-toolbar {
+    justify-content: flex-start;
+  }
+
+  .toolbar-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+
+  .dropzone {
+    padding: 1.75rem 1rem;
+  }
 }

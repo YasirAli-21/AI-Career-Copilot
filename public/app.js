@@ -1,8 +1,7 @@
 // public/app.js
 //
-// DAY 7: Added cover letter generation, reusing resumeText/jdText already
-// captured from the analyze flow. Full screen flow: Input -> Loading -> Report
-// -> (optional) Loading -> Cover Letter, plus Error handling throughout.
+// DAY 7 (polish pass): Added keyboard accessibility for the dropzone, aria-selected
+// tab state updates. Core flow logic unchanged from the cover-letter milestone.
 
 import { renderScoreHeader } from "./components/scoreHeader.js";
 import { renderSectionCard, renderJDMatchCard } from "./components/reportCard.js";
@@ -51,7 +50,7 @@ let lastReport = null;
 let lastResumeText = null;
 let lastJdText = null;
 let lastCoverLetter = null;
-let errorReturnScreen = "input"; // which screen "Try Again" should return to
+let errorReturnScreen = "input";
 
 const SECTION_ORDER = [
   "contact_info",
@@ -69,6 +68,14 @@ function showScreen(name) {
   reportScreen.hidden = name !== "report";
   coverLetterScreen.hidden = name !== "cover-letter";
   errorScreen.hidden = name !== "error";
+
+  const activeEl = document.getElementById(`${name}-screen`);
+  if (activeEl) {
+    activeEl.classList.remove("screen-enter");
+    // Force reflow so the animation re-triggers every time this screen shows.
+    void activeEl.offsetWidth;
+    activeEl.classList.add("screen-enter");
+  }
 }
 
 function showLoading(message) {
@@ -79,9 +86,13 @@ function showLoading(message) {
 // ---------- Tabs ----------
 tabButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    tabButtons.forEach((b) => b.classList.remove("active"));
+    tabButtons.forEach((b) => {
+      b.classList.remove("active");
+      b.setAttribute("aria-selected", "false");
+    });
     tabPanels.forEach((p) => p.classList.remove("active"));
     btn.classList.add("active");
+    btn.setAttribute("aria-selected", "true");
     document.getElementById(btn.dataset.tab).classList.add("active");
     activeTab = btn.dataset.tab;
     clearStatus();
@@ -91,6 +102,15 @@ tabButtons.forEach((btn) => {
 // ---------- File selection ----------
 fileInput.addEventListener("change", () => {
   if (fileInput.files.length > 0) handleFileSelected(fileInput.files[0]);
+});
+
+// Keyboard accessibility: dropzone is a <label>, which isn't natively
+// keyboard-activatable the way a <button> is, so we wire Enter/Space manually.
+dropzone.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" || e.key === " ") {
+    e.preventDefault();
+    fileInput.click();
+  }
 });
 
 dropzone.addEventListener("dragover", (e) => {
@@ -185,7 +205,7 @@ analyzeBtn.addEventListener("click", async () => {
     lastReport = data;
     lastResumeText = resumeText;
     lastJdText = jdText || null;
-    lastCoverLetter = null; // reset any previous cover letter from an earlier session
+    lastCoverLetter = null;
     renderReport(data);
     showScreen("report");
   } catch (err) {
@@ -295,7 +315,6 @@ function downloadTextFile(text, filename) {
 coverLetterBtn.addEventListener("click", async () => {
   if (!lastResumeText) return;
 
-  // If we already generated one this session, just show it again (no re-call).
   if (lastCoverLetter) {
     renderCoverLetter(lastCoverLetter);
     showScreen("cover-letter");

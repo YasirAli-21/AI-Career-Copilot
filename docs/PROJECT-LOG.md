@@ -86,5 +86,17 @@ Running log of daily progress across the 10-day capstone.
 
 ---
 
-## Day 7 — Implementation: Cover Letter Generator (Bonus)
-*(To be filled in at end of Day 7)*
+## Day 7 — Cover Letter Generator (Bonus) & UX Polish
+**Date:** August 1, 2026
+
+- Built and shipped the cover letter generator: `prompts/coverLetterPrompt.js`, `api/cover-letter.js` (reusing the Gemini setup from Day 5/6), and full UI (Generate button, cover letter screen, Copy/Download, JD-tailored badge).
+- Verified cover letter working locally, then confirmed working live in production for the first time.
+- Conducted a senior-level UX/accessibility review pass: fixed a real keyboard-accessibility bug (upload dropzone was mouse-only), added `aria-live` regions across all dynamic screens, added a proportional conic-gradient score ring, added a mobile responsive breakpoint, added subtle screen-transition and button micro-interactions, and added `prefers-reduced-motion` support.
+- Redeployed to production and re-verified the full flow (including cover letter) live.
+- **Deliverables:** DAY7-SUMMARY.md, updated Implementation Blueprint.
+- **Every planned v1.0 feature is now built, deployed, and verified live.**
+
+---
+
+## Day 8 — Testing
+*(To be filled in at end of Day 8 — starting checklist: DOCX extraction untested, malformed-JSON retry path untested, drag-and-drop bad-file-type rejection untested)*
