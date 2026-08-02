@@ -38,6 +38,9 @@ No other environment variables are needed for v1.0 (no database URL, no auth sec
 | `.gitignore` | Excludes `node_modules/`, `.env`, `.vercel/` from version control | ✅ Yes |
 | `package.json` | Dependency list + project metadata | ✅ Yes |
 | `package-lock.json` | Exact dependency version lockfile | ✅ Yes |
+| `vercel.json` | **Added Day 8.** Security headers, static asset caching, explicit 30s function timeout | ✅ Yes |
+| `lib/config.js` | **Added Day 8.** Shared `MODEL_NAME` + `AI_CALL_TIMEOUT_MS`, removes prior duplication | ✅ Yes |
+| `lib/withTimeout.js` | **Added Day 8.** Wraps AI calls with a timeout for graceful failure | ✅ Yes |
 
 ## Hosting Environment (Day 9)
 

@@ -98,5 +98,18 @@ Running log of daily progress across the 10-day capstone.
 
 ---
 
-## Day 8 — Testing
-*(To be filled in at end of Day 8 — starting checklist: DOCX extraction untested, malformed-JSON retry path untested, drag-and-drop bad-file-type rejection untested)*
+## Day 8 — Testing, Debugging & Production Optimization
+**Date:** August 2, 2026
+
+- Conducted a structured senior review (Security / Reliability / Code Quality) before writing any code. Found 6 real issues.
+- **Fixed:** added prompt-injection guardrails to both AI prompts; added `vercel.json` with security headers, static asset caching, and explicit 30s function timeout; added `lib/withTimeout.js` wrapping both AI calls with a 25s timeout for graceful failure; added `lib/config.js` removing a duplicated `MODEL_NAME` string; added missing meta description + favicon.
+- Ran a full testing pass: short/empty input rejection ✅, non-resume gibberish handling ✅ (AI correctly flagged it, no crash), drag-and-drop bad file type rejection ✅ (**closes a Day-4 gap**), mobile viewport ✅, console clean (zero errors/warnings) ✅, **DOCX extraction with a real file ✅ (closes a Day-4 gap)**.
+- One item (malformed-JSON retry path) remains code-reviewed but not organically observed — documented as low-risk given zero AI JSON failures across all real testing to date.
+- Redeployed to production and re-verified the full flow live, including console-clean confirmation on the live site.
+- **Deliverables:** DAY8-SUMMARY.md, updated Implementation Blueprint, updated ENVIRONMENT.md.
+- **Reviewer's verdict: approved for public release.**
+
+---
+
+## Day 9 — Deployment Verification & Hardening
+*(To be filled in at end of Day 9 — note: first deployment already happened Day 6, hardening already substantially done Day 8; Day 9 scope may be lighter than originally planned)*

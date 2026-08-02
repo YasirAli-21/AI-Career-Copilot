@@ -1,14 +1,15 @@
 // api/analyze.js
 //
 // DAY 5: Real resume analysis engine using the Google Gemini API (free tier).
-// Sends resume text (+ optional JD) to Gemini, parses the structured JSON
-// response, retries once on malformed output, and validates/backfills the
-// schema before returning it to the client. See docs/API.md and docs/SCHEMA.md.
+// DAY 8: Uses shared lib/config.js (removes duplicated MODEL_NAME), wraps the
+// AI call with a timeout so a hung request fails with a clear error instead
+// of spinning forever or hitting Vercel's raw platform timeout.
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const buildAnalysisPrompt = require("../prompts/analysisPrompt");
+const { MODEL_NAME, AI_CALL_TIMEOUT_MS } = require("../lib/config");
+const withTimeout = require("../lib/withTimeout");
 
-const MODEL_NAME = "gemini-flash-lite-latest"; // free-tier alias, auto-tracks newest stable Flash-Lite
 const MAX_RESUME_LENGTH = 15000;
 const MAX_JD_LENGTH = 5000;
 const MIN_RESUME_LENGTH = 50;
@@ -38,7 +39,6 @@ function safeDefaultSection(key) {
   return base;
 }
 
-// Validates and backfills a parsed AI response into a guaranteed-complete AnalysisReport.
 function validateAndFillReport(parsed, jdProvided) {
   const report = {
     overall_score: clampScore(parsed.overall_score),
@@ -85,8 +85,6 @@ function validateAndFillReport(parsed, jdProvided) {
     report.sections[key] = section;
   }
 
-  // jd_match is always forced server-side based on whether a JD was actually submitted,
-  // regardless of what the AI returned — keeps the contract unambiguous for the frontend.
   if (jdProvided && parsed.jd_match && parsed.jd_match.available) {
     report.jd_match = {
       available: true,
@@ -99,7 +97,6 @@ function validateAndFillReport(parsed, jdProvided) {
 }
 
 function extractJSON(rawText) {
-  // Strip markdown code fences if the model added them despite instructions.
   let cleaned = rawText.trim();
   cleaned = cleaned.replace(/^```json\s*/i, "").replace(/^```\s*/i, "").replace(/```\s*$/i, "");
   return JSON.parse(cleaned.trim());
@@ -144,13 +141,17 @@ module.exports = async (req, res) => {
     generationConfig: { responseMimeType: "application/json" },
   });
 
-  async function callGemini() {
-    const result = await model.generateContent(prompt);
+  async function callGemini(promptText) {
+    const result = await withTimeout(
+      model.generateContent(promptText),
+      AI_CALL_TIMEOUT_MS,
+      "The AI service took too long to respond. Please try again."
+    );
     return result.response.text();
   }
 
   try {
-    let rawText = await callGemini();
+    let rawText = await callGemini(prompt);
     let parsed;
 
     try {
@@ -158,8 +159,7 @@ module.exports = async (req, res) => {
     } catch (firstParseErr) {
       console.warn("First JSON parse failed, retrying with stricter reminder...");
       const retryPrompt = prompt + "\n\nIMPORTANT: Your last response was not valid JSON. Return ONLY the JSON object, nothing else.";
-      const retryResult = await model.generateContent(retryPrompt);
-      rawText = retryResult.response.text();
+      rawText = await callGemini(retryPrompt);
       parsed = extractJSON(rawText); // if this throws too, it's caught below
     }
 
@@ -171,6 +171,12 @@ module.exports = async (req, res) => {
     if (err instanceof SyntaxError) {
       return res.status(500).json({
         error: "We couldn't generate a valid report. Please try again.",
+      });
+    }
+
+    if (err.message && err.message.includes("took too long")) {
+      return res.status(504).json({
+        error: err.message,
       });
     }
 

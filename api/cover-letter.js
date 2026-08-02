@@ -1,13 +1,14 @@
 // api/cover-letter.js
 //
-// DAY 7: Real cover letter generation using the Gemini API (same setup as
-// api/analyze.js). Reuses resume/JD text already captured client-side —
-// no re-upload needed. See docs/API.md.
+// DAY 7: Real cover letter generation using the Gemini API.
+// DAY 8: Uses shared lib/config.js (removes duplicated MODEL_NAME), wraps the
+// AI call with a timeout so a hung request fails with a clear error.
 
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const buildCoverLetterPrompt = require("../prompts/coverLetterPrompt");
+const { MODEL_NAME, AI_CALL_TIMEOUT_MS } = require("../lib/config");
+const withTimeout = require("../lib/withTimeout");
 
-const MODEL_NAME = "gemini-flash-lite-latest";
 const MAX_RESUME_LENGTH = 15000;
 const MAX_JD_LENGTH = 5000;
 const MIN_RESUME_LENGTH = 50;
@@ -49,7 +50,11 @@ module.exports = async (req, res) => {
   const model = genAI.getGenerativeModel({ model: MODEL_NAME });
 
   try {
-    const result = await model.generateContent(prompt);
+    const result = await withTimeout(
+      model.generateContent(prompt),
+      AI_CALL_TIMEOUT_MS,
+      "The AI service took too long to respond. Please try again."
+    );
     const letterText = result.response.text().trim();
 
     if (!letterText || letterText.length < 50) {
@@ -64,6 +69,13 @@ module.exports = async (req, res) => {
     });
   } catch (err) {
     console.error("Gemini cover letter call failed:", err);
+
+    if (err.message && err.message.includes("took too long")) {
+      return res.status(504).json({
+        error: err.message,
+      });
+    }
+
     return res.status(502).json({
       error: "Our AI service is temporarily unavailable. Please try again in a moment.",
       details: err.message,

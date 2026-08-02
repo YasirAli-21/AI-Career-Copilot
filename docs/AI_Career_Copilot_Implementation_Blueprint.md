@@ -3,7 +3,9 @@
 **Project:** AI Career Copilot — Resume Intelligence Platform (v1.0)
 **Owner:** Yasir | ABTalks 60-Day Claude AI Mastery Challenge — Capstone
 **Time budget:** ~1–2 focused hours/day
-**Status:** Days 1-7 complete (Requirements, Design, Setup, Resume Input, AI Analysis Engine, Report UI, Cover Letter + UX Polish). **Full v1.0 feature set is live and deployed.** This document is the single source of truth for Days 8–10.
+**Status:** Days 1-8 complete (Requirements through Testing/Hardening). **Application is release-ready.** This document is the single source of truth for Days 9-10.
+
+> **Day 8 update — Release-readiness review complete:** A structured senior review (security/reliability/code quality) found and fixed 6 real issues: prompt-injection guardrails added to both AI prompts, security headers added via `vercel.json`, AI call timeout handling added (`lib/withTimeout.js`), explicit function timeout configured, and a code-quality duplication removed (`lib/config.js`). All previously-carried-forward test gaps closed: DOCX extraction confirmed working, drag-and-drop rejection confirmed working, console verified clean. Full details in `docs/DAY8-SUMMARY.md`. **The reviewer's verdict: approved for public release.**
 
 > **Day 7 update — Cover letter shipped, UX/accessibility polish pass done:** The bonus cover letter feature is live and verified in production. A senior-level UX review pass fixed a real keyboard-accessibility bug (upload dropzone was mouse-only), added aria-live regions, a proportional score ring, mobile responsive breakpoints, and respect for `prefers-reduced-motion`. Full details in `docs/DAY7-SUMMARY.md`. **Every planned v1.0 feature is now built and live** — Day 8 is a genuine stress-test of a complete product, not a partial one.
 
