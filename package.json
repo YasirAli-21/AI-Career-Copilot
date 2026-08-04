@@ -1,8 +1,8 @@
+
 {
   "name": "ai-career-copilot",
   "version": "1.0.0",
-  "description": "AI-powered resume intelligence platform — ABTalks Claude Challenge Capstone",
-  "main": "index.js",
+  "description": "AI-powered resume intelligence platform that gives students a detailed, honest breakdown of their resume — ATS scoring, missing skills, rewritten bullet points, job-match analysis, and a tailored cover letter. Built as the ABTalks 60-Day Claude AI Mastery Challenge capstone.",
   "directories": {
     "doc": "docs"
   },
@@ -13,16 +13,23 @@
     "type": "git",
     "url": "git+https://github.com/YasirAli-21/AI-Career-Copilot.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "resume",
+    "ai",
+    "career",
+    "gemini",
+    "job-search",
+    "ats",
+    "cover-letter"
+  ],
+  "author": "Yasir Ali",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/YasirAli-21/AI-Career-Copilot/issues"
   },
-  "homepage": "https://github.com/YasirAli-21/AI-Career-Copilot#readme",
+  "homepage": "https://ai-career-copilot-lime-xi.vercel.app",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.115.0",
     "@google/generative-ai": "^0.24.1",
     "formidable": "^3.5.4",
     "mammoth": "^1.12.0",

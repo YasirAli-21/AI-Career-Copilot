@@ -111,5 +111,18 @@ Running log of daily progress across the 10-day capstone.
 
 ---
 
-## Day 9 — Deployment Verification & Hardening
-*(To be filled in at end of Day 9 — note: first deployment already happened Day 6, hardening already substantially done Day 8; Day 9 scope may be lighter than originally planned)*
+## Day 9 — Launch & Production Readiness
+**Date:** August 4, 2026
+
+- Conducted a full Release Readiness Review: deployment, environment variables, docs, metadata, error pages, repo organization.
+- **Fixed:** created the missing `.env.example` (never actually existed despite being referenced since Day 3); corrected `package.json` license mismatch (ISC → MIT) and removed the unused `@anthropic-ai/sdk` dependency; fully rewrote `README.md` from GitHub's placeholder to real project documentation; added Open Graph/Twitter Card social sharing metadata; added a custom styled 404 page.
+- Resolved a `vercel dev` self-upgrade failure (Windows file lock), updated Vercel CLI to latest.
+- Verified live in production: full flow, custom 404 page, footer, and social link preview (tested via LinkedIn post draft).
+- **Process note:** two file-creation steps today initially failed silently and required disk-level verification (`dir`/`findstr`) to catch — reinforces the standing practice of never assuming a step succeeded without direct confirmation.
+- **Deliverables:** DAY9-SUMMARY.md, updated Implementation Blueprint, rewritten README.md.
+- **Every item on the release-readiness checklist is complete.**
+
+---
+
+## Day 10 — Maintenance & Launch
+*(Final day — to be filled in at end of Day 10)*
