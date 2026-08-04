@@ -53,6 +53,22 @@ Also encountered and resolved: a `vercel dev` self-upgrade failure (Windows file
 - ✅ Accessibility: keyboard nav, aria-live, reduced-motion support (Day 7)
 - ✅ Security: prompt-injection guardrails, security headers (Day 8)
 
+## Security Incident: API Key Briefly Exposed in `.env.example`
+
+While fixing the missing `.env.example` file, the real Gemini API key was accidentally pasted into it instead of a placeholder. GitHub's **push protection** caught this automatically and **blocked the push before it ever reached the public repository** — the key was never actually exposed on GitHub.
+
+**Response taken:**
+1. Revoked the exposed key immediately in Google AI Studio
+2. Generated a fresh replacement key
+3. Updated the key in three places: local `.env`, Vercel's production environment variable, and confirmed `.env.example` contained only a placeholder
+4. Amended the git commit (rather than adding a new one) so the exposed key never entered the repository's history at all — `git commit --amend` before the first successful push
+5. Redeployed and verified the new key works correctly in production
+
+**Why this matters:** this is exactly the scenario GitHub's push protection exists for, and it worked as designed. The lesson: `.env.example` must always contain placeholder text, never a real value — an easy mistake to make when copy-pasting quickly between files with similar names. Worth double-checking any `.example`/`.template` file's contents before committing, not just its existence.
+
+---
+
 ## Ready for Day 10?
+
 
 **Yes — and there's very little left.** Deployment happened Day 6, hardening happened Day 8, and full release-readiness polish happened today. Day 10 is genuinely just final wrap-up: a last walkthrough, closing documentation, and the LinkedIn launch post — not fixing anything broken.

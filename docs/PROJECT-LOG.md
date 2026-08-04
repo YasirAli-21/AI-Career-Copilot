@@ -119,6 +119,7 @@ Running log of daily progress across the 10-day capstone.
 - Resolved a `vercel dev` self-upgrade failure (Windows file lock), updated Vercel CLI to latest.
 - Verified live in production: full flow, custom 404 page, footer, and social link preview (tested via LinkedIn post draft).
 - **Process note:** two file-creation steps today initially failed silently and required disk-level verification (`dir`/`findstr`) to catch — reinforces the standing practice of never assuming a step succeeded without direct confirmation.
+- **Security incident:** the real Gemini API key was accidentally pasted into `.env.example` instead of a placeholder. GitHub's push protection blocked the push before it reached the public repo. Response: revoked the exposed key, generated a new one, updated it in `.env` and Vercel's production environment variables, amended the git commit so the exposed key never entered repo history, redeployed and verified the new key works. Full incident details in `docs/DAY9-SUMMARY.md`.
 - **Deliverables:** DAY9-SUMMARY.md, updated Implementation Blueprint, rewritten README.md.
 - **Every item on the release-readiness checklist is complete.**
 
