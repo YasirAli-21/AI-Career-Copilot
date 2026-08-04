@@ -10,6 +10,14 @@ Built as the 10-day capstone project for the **ABTalks 60-Day Claude AI Mastery 
 
 ---
 
+## Screenshots
+
+| Report | Cover Letter |
+|---|---|
+| ![Resume analysis report](./docs/screenshots/02-report-screen.png) | ![Generated cover letter](./docs/screenshots/03-cover-letter-screen.png) |
+
+---
+
 ## Features
 
 - **Resume upload or paste** — PDF and DOCX file support (via `pdf-parse` and `mammoth`), or paste text directly
