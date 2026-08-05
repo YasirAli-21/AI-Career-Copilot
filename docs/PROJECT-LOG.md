@@ -125,5 +125,17 @@ Running log of daily progress across the 10-day capstone.
 
 ---
 
-## Day 10 — Maintenance & Launch
-*(Final day — to be filled in at end of Day 10)*
+## Day 10 — Final Review, Portfolio & Graduation
+**Date:** August 4, 2026
+
+- Conducted a four-perspective senior review (Engineer, PM, UX Designer, Recruiter) of the live product.
+- Generated portfolio materials: project descriptions (short/medium/long), resume bullet points, interview talking points, and a demo script.
+- Created `future-scope.md` (3/6/12-month roadmap), `challenge-retrospective.md` (full factual Day 1-10 build history), `30-day-growth-plan.md` (one-milestone-per-day extension roadmap), and `daily-build-prompt.md` (reusable prompt template).
+- Added 4 real screenshots to `docs/screenshots/` and embedded them in a rewritten README (worked through a folder-naming/typo saga — `Screenshorts` → `screenshorts` → `screenshots` — resolved via `git rm --cached` + clean re-add).
+- Set GitHub repo metadata: description, website link, 10 topic tags.
+- **Published the formal v1.0.0 GitHub release**, tagged and documented.
+- **The AI Career Copilot capstone is complete: 10 days, requirements to a versioned public v1.0.0 release.**
+
+---
+
+**Capstone complete.**

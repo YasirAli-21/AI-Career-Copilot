@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Certificate of Completion — Yasir Ali</title>
+<style>
+  @page {
+    size: A4 landscape;
+    margin: 0;
+  }
+  :root {
+    --navy-dark: #0f172a;
+    --navy: #16213e;
+    --teal: #14b8a6;
+    --teal-light: #5eead4;
+    --white: #ffffff;
+    --offwhite: #f1f5f9;
+    --muted: #94a3b8;
+    --amber: #fbbf24;
+    --serif: Cambria, Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SFMono-Regular", Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #dbe3ea;
+    font-family: var(--sans);
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .certificate {
+    width: 297mm;
+    height: 210mm;
+    max-width: 100%;
+    background: var(--navy-dark);
+    position: relative;
+    overflow: hidden;
+    color: var(--offwhite);
+    padding: 3.2rem 4rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+
+  .certificate::before {
+    content: "";
+    position: absolute;
+    top: -180px; left: -180px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(20,184,166,0.12), transparent 70%);
+  }
+  .certificate::after {
+    content: "";
+    position: absolute;
+    bottom: -200px; right: -160px;
+    width: 460px; height: 460px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(20,184,166,0.10), transparent 70%);
+  }
+
+  .border-frame {
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(94, 234, 212, 0.35);
+    pointer-events: none;
+  }
+  .border-frame::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border: 1px solid rgba(94, 234, 212, 0.15);
+  }
+
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+  }
+
+  .wordmark {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    transform: rotate(-1.5deg);
+  }
+  .wordmark span { color: var(--teal-light); }
+  .wordmark-sub {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  .cert-id {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .body-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    padding: 0 2rem;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--teal-light);
+    margin-bottom: 1.1rem;
+  }
+
+  .cert-title {
+    font-family: var(--serif);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.01em;
+  }
+
+  .presented-to {
+    margin-top: 1.6rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .recipient {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    color: var(--teal-light);
+    margin-top: 0.5rem;
+    font-weight: 700;
+    border-bottom: 1.5px solid rgba(94,234,212,0.3);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+  }
+
+  .cert-body-text {
+    max-width: 620px;
+    margin-top: 1.6rem;
+    font-size: 0.98rem;
+    color: var(--offwhite);
+    line-height: 1.65;
+  }
+  .cert-body-text strong { color: var(--white); }
+
+  .project-chip {
+    margin-top: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(20,184,166,0.1);
+    border: 1px solid rgba(20,184,166,0.35);
+    padding: 0.55rem 1.2rem;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--teal-light);
+  }
+
+  .bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    z-index: 2;
+    margin-top: 1.5rem;
+  }
+
+  .sign-block { text-align: left; }
+  .sign-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--white);
+    border-bottom: 1px solid var(--muted);
+    padding-bottom: 0.3rem;
+    min-width: 200px;
+  }
+  .sign-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .date-block { text-align: center; }
+  .date-value {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--white);
+  }
+  .date-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .links-block { text-align: right; font-size: 0.78rem; }
+  .links-block a {
+    color: var(--teal-light);
+    text-decoration: none;
+    display: block;
+    margin-top: 0.15rem;
+  }
+  .links-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+  }
+
+  .print-btn {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-family: var(--sans);
+  }
+  .print-btn button {
+    background: var(--teal);
+    color: var(--navy-dark);
+    border: none;
+    padding: 0.7rem 1.6rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  @media print {
+    body { background: var(--navy-dark); padding: 0; }
+    .certificate { box-shadow: none; }
+    .print-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div>
+  <div class="certificate">
+    <div class="border-frame"></div>
+
+    <div class="top-row">
+      <div>
+        <div class="wordmark">AB <span>TALKS</span></div>
+        <div class="wordmark-sub">60-Day Claude AI Mastery Challenge</div>
+      </div>
+      <div class="cert-id">
+        CERTIFICATE NO. ABT-CS-2026-0810<br />
+        ISSUED AUGUST 5, 2026
+      </div>
+    </div>
+
+    <div class="body-block">
+      <div class="eyebrow">Certificate of Completion</div>
+      <div class="cert-title">10-Day Capstone Sprint</div>
+
+      <div class="presented-to">This certifies that</div>
+      <div class="recipient">Yasir Ali</div>
+
+      <p class="cert-body-text">
+        has successfully completed the <strong>AB Talks 10-Day Capstone Sprint</strong>, part of the <strong>AB Talks 60-Day Claude AI Mastery Challenge</strong>, by independently designing, building, securing, testing, and publicly launching a production-ready software application — carrying a project through the complete software development lifecycle from requirements to a tagged <strong>v1.0.0</strong> public release.
+      </p>
+
+      <div class="project-chip">● AI Career Copilot — v1.0.0 — Deployed &amp; Live</div>
+    </div>
+
+    <div class="bottom-row">
+      <div class="sign-block">
+        <div class="sign-name">Claude</div>
+        <div class="sign-label">AI Pair Programmer &amp; Project Mentor (Free Tier)</div>
+      </div>
+
+      <div class="date-block">
+        <div class="date-value">August 5, 2026</div>
+        <div class="date-label">Date of Completion</div>
+      </div>
+
+      <div class="links-block">
+        <div class="links-label">AB Talks</div>
+        <a href="https://www.abtalks.in/" target="_blank">abtalks.in</a>
+        <a href="https://www.linkedin.com/company/abtalks-on-ai/" target="_blank">linkedin.com/company/abtalks-on-ai</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="print-btn">
+    <button onclick="window.print()">Print / Save as PDF</button>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The 60-Day Arc — Yasir Ali</title>
+<style>
+  :root {
+    --navy-dark: #0f172a;
+    --navy: #16213e;
+    --card: #1e293b;
+    --card-light: #263348;
+    --teal: #14b8a6;
+    --teal-light: #5eead4;
+    --white: #ffffff;
+    --offwhite: #f1f5f9;
+    --muted: #94a3b8;
+    --amber: #fbbf24;
+    --serif: Cambria, Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--navy-dark);
+    color: var(--offwhite);
+    font-family: var(--sans);
+    line-height: 1.6;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding: 5rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(20,184,166,0.14), transparent 70%);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--teal-light);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.08;
+    max-width: 780px;
+    letter-spacing: -0.01em;
+  }
+  .hero .accent { color: var(--teal-light); }
+  .hero p.sub {
+    margin-top: 1.25rem;
+    max-width: 560px;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+
+  .streak-block {
+    margin-top: 3rem;
+    display: flex;
+    gap: 2.5rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .streak-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    width: 320px;
+  }
+  .cell {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    background: var(--teal);
+    opacity: 0;
+    animation: pop 0.4s ease forwards;
+  }
+  .cell.future { background: var(--card-light); }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .streak-stats { display: flex; flex-direction: column; gap: 1rem; justify-content: center; }
+  .stat-num { font-family: var(--serif); font-size: 2.75rem; color: var(--white); font-weight: 700; line-height: 1; }
+  .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* ---------- JOURNEY ---------- */
+  .journey { padding: 4rem 0 3rem; }
+  .section-title {
+    font-family: var(--serif);
+    font-size: 1.9rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .section-sub { color: var(--muted); margin-bottom: 2.5rem; max-width: 620px; }
+
+  .stage-list { display: flex; flex-direction: column; }
+  .stage {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1.5rem;
+    padding: 1.4rem 0;
+    border-top: 1px solid var(--card);
+    align-items: baseline;
+  }
+  .stage:last-child { border-bottom: 1px solid var(--card); }
+  .stage-week {
+    font-family: var(--mono);
+    color: var(--teal-light);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+  .stage-title { font-weight: 600; color: var(--white); font-size: 1.02rem; margin-bottom: 0.3rem; }
+  .stage-desc { color: var(--muted); font-size: 0.92rem; }
+
+  /* ---------- CAPSTONE SPOTLIGHT ---------- */
+  .spotlight {
+    margin: 4rem 0;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 2.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    bottom: -150px; left: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(20,184,166,0.1), transparent 70%);
+  }
+  .spotlight-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: var(--teal-light);
+    text-transform: uppercase;
+  }
+  .spotlight h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    color: var(--white);
+    margin: 0.6rem 0 1rem;
+  }
+  .spotlight p.lead { color: var(--offwhite); max-width: 620px; font-size: 1rem; }
+
+  .metric-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 1.5rem;
+    margin: 2.25rem 0;
+    position: relative;
+  }
+  .metric .n { font-family: var(--serif); font-size: 2.2rem; color: var(--teal-light); font-weight: 700; }
+  .metric .l { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
+
+  .moment-list { display: flex; flex-direction: column; gap: 1rem; position: relative; }
+  .moment {
+    display: flex; gap: 0.9rem;
+    padding: 1rem;
+    background: var(--navy);
+    border-radius: 10px;
+    border-left: 3px solid var(--teal);
+  }
+  .moment .tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+  .moment .txt { color: var(--offwhite); font-size: 0.9rem; }
+
+  /* ---------- CLOSING ---------- */
+  .closing {
+    padding: 4rem 0 5rem;
+    text-align: center;
+  }
+  .closing p {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: var(--white);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+  .closing .signoff {
+    margin-top: 1.5rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  footer {
+    border-top: 1px solid var(--card);
+    padding: 1.5rem 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap hero">
+  <div class="eyebrow">ABTalks 60-Day Claude AI Mastery Challenge</div>
+  <h1>60 days. <span class="accent">59 completed</span>. One capstone shipped to production.</h1>
+  <p class="sub">A record of how eight weeks of structured AI skill-building — from first prompts to autonomous agent architecture — culminated in a live, secured, publicly released product: AI Career Copilot v1.0.0.</p>
+
+  <div class="streak-block">
+    <div class="streak-grid" id="grid"></div>
+    <div class="streak-stats">
+      <div>
+        <div class="stat-num">59<span style="color:var(--muted); font-size:1.4rem;">/60</span></div>
+        <div class="stat-label">days completed, on time</div>
+      </div>
+      <div>
+        <div class="stat-num">9</div>
+        <div class="stat-label">days to ship the capstone, requirements to v1.0.0</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap journey">
+  <h2 class="section-title">The Arc</h2>
+  <p class="section-sub">Eight weekly stages of the challenge, each building the specific capability the capstone would later demand.</p>
+
+  <div class="stage-list">
+    <div class="stage">
+      <div class="stage-week">WEEK 1</div>
+      <div>
+        <div class="stage-title">AI Foundations</div>
+        <div class="stage-desc">Understanding how large language models actually work — the groundwork every later prompt and product decision rested on.</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-week">WEEK 2</div>
+      <div>
+        <div class="stage-title">Effective Prompting</div>
+        <div class="stage-desc">Precision in instruction — the exact skill that later shaped the capstone's anti-hallucination and anti-prompt-injection guardrails.</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-week">WEEK 3</div>
+      <div>
+        <div class="stage-title">Reasoning &amp; Research Workflows</div>
+        <div class="stage-desc">Structured problem-solving with AI as a thinking partner — the same posture used to diagnose the Day 6 production crash from raw runtime logs.</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-week">WEEK 4</div>
+      <div>
+        <div class="stage-title">Automation</div>
+        <div class="stage-desc">Turning repeatable work into pipelines — reflected in the capstone's daily-log discipline and its reusable 30-day build-prompt template.</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-week">WEEK 5</div>
+      <div>
+        <div class="stage-title">Product Thinking</div>
+        <div class="stage-desc">Scoping, not just building. The discipline that kept the capstone's PRD locked for all 9 days with zero silent scope creep.</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-week">WEEK 6</div>
+      <div>
+        <div class="stage-title">Increasingly Sophisticated AI Projects</div>
+        <div class="stage-desc">Escalating build complexity, session over session — the on-ramp to shipping a full-stack AI product solo.</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-week">WEEK 7</div>
+      <div>
+        <div class="stage-title">Multimodal AI &amp; Knowledge Systems</div>
+        <div class="stage-desc">Working across formats and structured data — the exact skill behind the capstone's PDF/DOCX extraction and JSON-schema-first AI output design.</div>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="stage-week">WEEK 8</div>
+      <div>
+        <div class="stage-title">Autonomous Agents, Multi-Agent Collaboration &amp; Launch</div>
+        <div class="stage-desc">The final stretch — and where this all became real: the 10-day capstone sprint, ending in a tagged, documented, publicly live v1.0.0 release.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="spotlight">
+    <div class="spotlight-eyebrow">The Capstone</div>
+    <h2>AI Career Copilot</h2>
+    <p class="lead">An AI resume intelligence platform, built solo across 9 days — not as an exercise, but as production software: architected, pivoted under real constraints, attacked and defended, and shipped.</p>
+
+    <div class="metric-row">
+      <div class="metric"><div class="n">9</div><div class="l">days, requirements to launch</div></div>
+      <div class="metric"><div class="n">2</div><div class="l">major real-world pivots</div></div>
+      <div class="metric"><div class="n">1</div><div class="l">production bug found &amp; fixed</div></div>
+      <div class="metric"><div class="n">1</div><div class="l">security incident, handled correctly</div></div>
+      <div class="metric"><div class="n">v1.0.0</div><div class="l">tagged public release</div></div>
+    </div>
+
+    <div class="moment-list">
+      <div class="moment">
+        <div class="tag">Pivot</div>
+        <div class="txt">Discovered Anthropic's API had no free tier — switched the entire AI backend to Google Gemini in a single session, with zero architecture rewrite, because the system was designed around a data contract, not a vendor.</div>
+      </div>
+      <div class="moment">
+        <div class="tag">Debug</div>
+        <div class="txt">A PDF-parsing library worked perfectly locally, then crashed in production. Root-caused it via real Vercel runtime logs to a missing native dependency — and fixed it correctly, not just worked around it.</div>
+      </div>
+      <div class="moment">
+        <div class="tag">Security</div>
+        <div class="txt">An API key was briefly exposed in a config file. GitHub's push protection caught it. The response — revoke, rotate, clean git history, verify — was executed completely and correctly.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap closing">
+  <p>Sixty days of building the skill. Nine days of proving it. One live product to show for it.</p>
+  <div class="signoff">Yasir Ali — AI Career Copilot v1.0.0 — August 2026</div>
+</div>
+
+<footer>Built with Claude · ABTalks 60-Day Claude AI Mastery Challenge</footer>
+
+<script>
+  const grid = document.getElementById('grid');
+  const completed = 59, total = 60;
+  for (let i = 0; i < total; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell' + (i >= completed ? ' future' : '');
+    cell.style.animationDelay = (i * 0.012) + 's';
+    grid.appendChild(cell);
+  }
+</script>
+
+</body>
+</html>
